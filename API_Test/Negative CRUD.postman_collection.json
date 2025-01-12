@@ -1,0 +1,238 @@
+{
+	"info": {
+		"_postman_id": "38720f0c-81b0-4090-9736-2a3989a19071",
+		"name": "Negative CRUD",
+		"description": "I was going to test all of the negative scenarios but i couldn't reproduce the \"Invalid ID 400\" response and \"405 Validation Exception\" response",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40851708",
+		"_collection_link": "https://www.postman.com/fatihonur22/my-workspace/collection/24thn4d/negative-crud?action=share&source=collection_link&creator=40851708"
+	},
+	"item": [
+		{
+			"name": "Post New Pet -Negative Scenario Invalid Input",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "special-key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": -2222,2222222,\r\n  \"name\": \"cat\",\r\n  \"status\": \"reserved\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "special-key",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pet By Id-Negative 404",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomId = Math.floor(Math.random() * 1000000) + 1;\r",
+							"pm.environment.set(\"randomPetId\", randomId);\r",
+							"console.log(\"Random Pet ID control:\", randomId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://petstore.swagger.io/v2/pet/{{randomPetId}}"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet- Negative 400",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomId = Math.floor(Math.random() * 1000000) + 1;\r",
+							"pm.environment.set(\"randomPetId\", randomId);\r",
+							"console.log(\"Random Pet ID control:\", randomId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {\r",
+							"    pm.response.to.have.status(400);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{randomPetId}},\r\n  \"name\": \"Bulut Updated\",\r\n  \r\n  \"category\": {\r\n    \"id\": \"1\",\r\n    \"name\": \"Dog\"\r\n  },\r\n  \"tags\": [\r\n    {\r\n      \"id\": \"2\",\r\n      \"name\": \"Fatih Tag Updated\"\r\n    }\r\n    \r\n  ],\r\n  \"status\": xxx\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet"
+					],
+					"query": [
+						{
+							"key": "petId",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pe- Negative 404 Not found",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomId = Math.floor(Math.random() * 1000000) + 1;\r",
+							"pm.environment.set(\"randomPetId\", randomId);\r",
+							"console.log(\"Random Pet ID control:\", randomId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/pet/{{randomPetId}}",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"pet",
+						"{{randomPetId}}"
+					],
+					"query": [
+						{
+							"key": "petId",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

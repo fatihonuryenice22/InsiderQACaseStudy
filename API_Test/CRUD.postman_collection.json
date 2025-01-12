@@ -1,0 +1,280 @@
+{
+	"info": {
+		"_postman_id": "21756c8b-4033-47ee-8821-de647635d6cf",
+		"name": "CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40851708",
+		"_collection_link": "https://www.postman.com/fatihonur22/my-workspace/collection/fnn74u1/crud?action=share&source=collection_link&creator=40851708"
+	},
+	"item": [
+		{
+			"name": "Post New Pet",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var randomId = Math.floor(Math.random() * 1000000) + 1;\r",
+							"pm.environment.set(\"randomPetId\", randomId);\r",
+							"console.log(\"Random Pet ID control:\", randomId);"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseData = pm.response.json();\r",
+							"if (responseData.id) {\r",
+							"    pm.environment.set(\"petId\", responseData.id);\r",
+							"    console.log(\"id setted\", responseData.id);\r",
+							"} else {\r",
+							"    console.log(\"There isn't any id.\");\r",
+							"}\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": {}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "api_key",
+						"value": "special-key",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\"id\": {{randomPetId}},\r\n  \"category\": {\r\n    \"id\": 0,\r\n    \"name\": \"Cat\"\r\n  },\r\n  \"name\": \"Bulut\",\r\n  \"photoUrls\": [\r\n    \r\n  ],\r\n  \"tags\": [\r\n    {\r\n      \"id\": 0,\r\n      \"name\": \"Fatih Yenice\"\r\n    }\r\n  ],\r\n  \"status\": \"available\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/pet",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"pet"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "special-key",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pet By Id",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"petId\");\r",
+							"pm.collectionVariables.get(\"petId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/pet/{{petId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"pet",
+						"{{petId}}"
+					],
+					"query": [
+						{
+							"key": "petId",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pet",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"petId\");\r",
+							"pm.collectionVariables.get(\"petId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": {{petId}},\r\n  \"name\": \"Bulut Updated\",\r\n  \r\n  \"category\": {\r\n    \"id\": \"1\",\r\n    \"name\": \"Dog\"\r\n  },\r\n  \"tags\": [\r\n    {\r\n      \"id\": \"2\",\r\n      \"name\": \"Fatih Tag Updated\"\r\n    }\r\n    \r\n  ],\r\n  \"status\": \"pending\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/pet",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"pet"
+					],
+					"query": [
+						{
+							"key": "petId",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pet",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.get(\"petId\");\r",
+							"pm.collectionVariables.get(\"petId\");"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/pet/{{petId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"pet",
+						"{{petId}}"
+					],
+					"query": [
+						{
+							"key": "petId",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "petId",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://petstore.swagger.io/v2",
+			"type": "string"
+		}
+	]
+}
