@@ -3,4 +3,3 @@ api test automation :https://www.postman.com/fatihonur22/my-workspace/collection
 and you can see my test automation from the monitors page on the left also here is the link :https://www.postman.com/fatihonur22/my-workspace/monitor/Test-Automation-for-Petstore---~1efcded2-200b-4670-a974-db90f45daf17
 Please check both automations 
 
-Description: In the CRUD collection and the test automation for Petstore, I automated the Add Pet, Get Pet, Update Pet, and Delete Pet scenarios. In the Add Pet API endpoint, I assigned a random ID as a pre-request and created the pet with this ID. Then, I captured the generated ID from the POST response and stored it as a variable to be used in subsequent tests. I used this ID in the corresponding endpoints during the following test scenarios. Additionally, I added pm.test code to each test case to validate the expected responses in the test automation process.
